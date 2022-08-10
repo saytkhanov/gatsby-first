@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
@@ -9,7 +13,16 @@ const config: GatsbyConfig = {
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: [],
+  plugins: [
+    {
+      resolve: 'gatsby-source-datocms',
+      options: {
+        apiToken: process.env.DATO_API_TOKEN,
+        previewMode: false,
+        disableLiveReload: false,
+      }
+    }
+  ],
 }
 
 export default config
