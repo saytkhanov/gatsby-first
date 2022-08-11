@@ -1,5 +1,5 @@
 import * as React from "react"
-import {graphql} from "gatsby";
+import {graphql, Link} from "gatsby";
 import Layout from "../components/layout";
 
 
@@ -12,6 +12,7 @@ interface Param {
     typeofpost: {
         name: string;
     }
+    slug: string
     meta: {
         createdAt: string
     }
@@ -26,10 +27,21 @@ interface P {
 }
 
 const Home = ({data}: P): React.ReactElement => {
+    const { nodes } = data.posts;
+
     return (
         <Layout>
-            {data.posts.nodes.map((item) => <h1 key={item.id}>{item.meta.createdAt}</h1>)}
-        </Layout>
+            <div>
+                {nodes.map((post) => {
+                    const { category, slug, meta, id } = post;
+                    return(
+                        <Link key={id} to={`/${category.name}/${slug}`}>
+                            <h1>{meta.createdAt}</h1>
+                        </Link>
+                    )
+                })}
+            </div>
+         </Layout>
     );
 };
 
@@ -37,14 +49,15 @@ export const query = graphql`
     query MyQuery {
         posts: allDatoCmsPost {
             nodes {
-                title
                 id
+                title
                 category {
                     name
                 }
                 typeofpost {
                     name
                 }
+                slug
                 meta {
                     createdAt
                 }

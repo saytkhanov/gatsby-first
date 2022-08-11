@@ -3,31 +3,54 @@ const path = require('path');
 
 
 type ResultData = {
-    allDatoCmsCategory: {
-        nodes: {
-            name: string,
-            url: string
-        } []
-    }
+        allDatoCmsPost: {
+            nodes: {
+                id: string;
+                title: string;
+                category: {
+                    name: string;
+                }
+                typeofpost: {
+                    name: string;
+                }
+                meta: {
+                    createdAt: string
+                }
+                slug: string
+            } []
+        }
 }
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
     const { data } = await graphql<ResultData>(`
     query CreatePageQuery {
-       allDatoCmsCategory {
-       nodes {
-      name
-      url
-    }
-  }
+       allDatoCmsPost {
+            nodes {
+                title
+                id
+                category {
+                    name
+                }
+                typeofpost {
+                    name
+                }
+                meta {
+                    createdAt
+                }
+                slug
+            }
+        }
 }
   `)
-    data?.allDatoCmsCategory.nodes.map((category) => {
-        const { url } = category;
+
+    data?.allDatoCmsPost.nodes.forEach((post) => {
+        const { slug, category } = post;
         actions.createPage({
-            path: `/${url}`,
-            component: path.resolve('./src/templates/category-page.tsx'),
-            context: {}
+            path: `/${category.name}/${slug}`,
+            component: path.resolve('./src/templates/single-post.tsx'),
+            context: {
+                slug
+            }
         })
     })
 
