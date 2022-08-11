@@ -1,35 +1,41 @@
 import * as React from "react"
 import {graphql} from "gatsby";
+import Layout from "../components/layout";
 
-type Params = {
-    allDatoCmsPost: {
-        nodes: Nodes[]
-    }
-}
 
-interface Nodes {
-    title: string;
+interface Param {
     id: string;
+    title: string;
     category: {
         name: string;
     }
     typeofpost: {
         name: string;
     }
-    created: string;
+    meta: {
+        createdAt: string
+    }
 }
 
-const Home = (data: Params) => {
+interface P {
+    data: {
+        posts: {
+            nodes: Param[]
+        }
+    }
+}
+
+const Home = ({data}: P): React.ReactElement => {
     return (
-        <div>
-            {data.allDatoCmsPost.nodes.map((item) => item.title)}
-        </div>
+        <Layout>
+            {data.posts.nodes.map((item) => <h1 key={item.id}>{item.meta.createdAt}</h1>)}
+        </Layout>
     );
 };
 
 export const query = graphql`
     query MyQuery {
-        allDatoCmsPost {
+        posts: allDatoCmsPost {
             nodes {
                 title
                 id
@@ -39,7 +45,9 @@ export const query = graphql`
                 typeofpost {
                     name
                 }
-                created
+                meta {
+                    createdAt
+                }
             }
         }
     }
