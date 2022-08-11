@@ -1,35 +1,33 @@
-import { GatsbyNode, PageProps } from "gatsby";
+import { GatsbyNode } from "gatsby";
+const path = require('path');
 
 
 type ResultData = {
-        allDatoCmsCategory: {
-            nodes: {
-                name: string,
-                originalId: string,
-                url: string
-            } []
-        }
+    allDatoCmsCategory: {
+        nodes: {
+            name: string,
+            url: string
+        } []
+    }
 }
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
     const { data } = await graphql<ResultData>(`
-    query MyQuery {
-  allDatoCmsCategory {
-    nodes {
+    query CreatePageQuery {
+       allDatoCmsCategory {
+       nodes {
       name
-      originalId
       url
     }
   }
 }
   `)
-    console.log(data.allDatoCmsCategory)
-    data.allDatoCmsCategory.nodes.map((category) => {
+    data?.allDatoCmsCategory.nodes.map((category) => {
         const { url } = category;
         actions.createPage({
             path: `/${url}`,
-            component: require.resolve('./src/templates/category-page.js'),
-            context: { url }
+            component: path.resolve('./src/templates/category-page.tsx'),
+            context: {}
         })
     })
 
