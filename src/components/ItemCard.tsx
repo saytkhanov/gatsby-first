@@ -4,8 +4,10 @@ import { Link } from "gatsby";
 const ItemCard = (props: ItemCardProps) => {
   const { post } = props;
   return (
-    <Link key={post.id} to={`/${post.slug}`}>
-      {post.title}
+    <Link to={`/${post.slug}`}>
+      <div>
+        <h3>{post.title}</h3>
+      </div>
     </Link>
   );
 };

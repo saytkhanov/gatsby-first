@@ -17,6 +17,7 @@ export const query = graphql`
   query MyQuery {
     posts: allDatoCmsPost {
       nodes {
+        id
         title
         category {
           name

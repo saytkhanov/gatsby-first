@@ -1,30 +1,7 @@
-interface LayoutProps {
-    children?: JSX.Element | JSX.Element[];
-}
-
 interface Params {
     data: {
         posts: {
-            nodes: {
-                id: string;
-                title: string;
-                category: {
-                    name: string;
-                }
-                typeofpost: {
-                    name: string;
-                }
-                slug: string;
-                meta: {
-                    createdAt: string;
-                }
-                body: string;
-                originalId: string;
-                featured: boolean;
-                coverImage: {
-                    url: string;
-                }
-            }[]
+            nodes: Props[]
         }
     }
 }
@@ -51,7 +28,6 @@ interface Props {
         createdAt: string;
     }
     body: string;
-    originalId: string;
     featured: boolean;
     coverImage: {
         url: string;
@@ -73,7 +49,6 @@ interface BlogPostsProps {
             createdAt: string;
         };
         body: string;
-        originalId: string;
         featured: boolean;
         coverImage: {
             url: string;

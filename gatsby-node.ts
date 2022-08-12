@@ -39,7 +39,7 @@ export const createPages: GatsbyNode["createPages"] = async ({
   actions,
 }) => {
   const { createPage } = actions;
-  return graphql<SingleResultData>(`
+  const result = await graphql<SingleResultData>(`
     query PostQuery {
       posts: allDatoCmsPost {
         nodes {
@@ -58,36 +58,33 @@ export const createPages: GatsbyNode["createPages"] = async ({
         }
       }
     }
-  `).then((results) => {
-    if (results.errors) {
-      throw results.errors;
-    }
-    const { posts, categories }: any = results.data;
+  `);
 
-    posts.nodes.forEach((post: any, index: number) => {
-      const previous =
-        index === posts.nodes.length - 1 ? null : posts.nodes[index + 1];
-      const next = index === 0 ? null : posts.nodes[index - 1];
-      createPage({
-        path: `${post.slug}`,
-        component: postTemplate,
-        context: {
-          slug: post.slug,
-          previous,
-          next,
-        },
-      });
+  const { posts, categories }: any = result;
+
+  posts.nodes.forEach((post: any, index: number) => {
+    const previous =
+      index === posts.nodes.length - 1 ? null : posts.nodes[index + 1];
+    const next = index === 0 ? null : posts.nodes[index - 1];
+    createPage({
+      path: `${post.slug}`,
+      component: postTemplate,
+      context: {
+        slug: post.slug,
+        previous,
+        next,
+      },
     });
+  });
 
-    categories.nodes.forEach((category: any) => {
-      createPage({
-        path: `/categories/${category.name.toLowerCase()}`,
-        component: categoryTemplate,
-        context: {
-          categoryTitle: category.name,
-          posts,
-        },
-      });
+  categories.nodes.forEach((category: any) => {
+    createPage({
+      path: `/categories/${category.name.toLowerCase()}`,
+      component: categoryTemplate,
+      context: {
+        categoryTitle: category.name,
+        posts,
+      },
     });
   });
 };

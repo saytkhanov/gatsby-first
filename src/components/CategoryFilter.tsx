@@ -2,8 +2,7 @@ import React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
 
 const getCategories = (posts: any) => {
-  const catCounts = posts.map((post: any) => post.category).flat();
-  return catCounts;
+  return posts.map((post: any) => post.category).flat();
 };
 
 const CategoryFilter = () => {
@@ -22,13 +21,17 @@ const CategoryFilter = () => {
   const categories = getCategories(posts.nodes);
   return (
     <div>
+      <ul className='flex'>
       {categories.map((item: any) => {
         return (
           <Link key={item.id} to={`/categories/${item.name.toLowerCase()}`}>
-            {item.name}
+                <li className='mr-4'>
+                  {item.name}
+                </li>
           </Link>
         );
       })}
+      </ul>
     </div>
   );
 };
