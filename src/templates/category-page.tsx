@@ -1,55 +1,73 @@
-// import React from 'react';
-// import Layout from "../components/layout";
-// import {graphql} from "gatsby";
-//
-// interface Param {
-//     id: string;
-//     title: string;
-//     category: {
-//         name: string;
-//     }
-//     typeofpost: {
-//         name: string;
-//     }
-//     meta: {
-//         createdAt: string
-//     }
-// }
-//
-// interface P {
-//     data: {
-//         posts: {
-//             nodes: Param[]
-//         }
-//     }
-// }
-//
-// const CategoryPage = ({data}: P): React.ReactElement => {
-//     return (
-//         <Layout>
-//             <div>{data.posts.nodes.map((item) => item.title)}</div>
-//         </Layout>
-//     );
-// };
-//
-// export const query = graphql`
-//     query PostQuery {
-//         posts: allDatoCmsPost {
-//             nodes {
-//                 title
-//                 id
-//                 category {
-//                     name
-//                 }
-//                 typeofpost {
-//                     name
-//                 }
-//                 meta {
-//                     createdAt
-//                 }
-//             }
-//         }
-//     }
-// `
-//
-// export default CategoryPage;
+import React from "react";
+import Layout from "../components/Layout";
+import BlogPosts from "../components/BlogPosts";
+
+interface SinglePostProps {
+  data: {
+    allDatoCmsPost: {
+      nodes: {
+        id: string;
+        title: string;
+        category: {
+          name: string;
+          id: string;
+        }[];
+        typeofpost: {
+          name: string;
+        };
+        slug: string;
+        meta: {
+          createdAt: string;
+        };
+        body: string;
+        originalId: string;
+        featured: boolean;
+        coverImage: {
+          url: string;
+        };
+      }[];
+    };
+  };
+  pageContext: {
+    categoryTitle: string;
+    posts: {
+      nodes: {
+        id: string;
+        title: string;
+        category: {
+          name: string;
+        }
+        typeofpost: {
+          name: string;
+        }
+        slug: string;
+        meta: {
+          createdAt: string;
+        }
+        body: string;
+        originalId: string;
+        featured: boolean;
+        coverImage: {
+          url: string;
+        }
+      }[]
+    };
+  };
+}
+
+const SinglePost = (props: SinglePostProps): React.ReactElement => {
+  const { pageContext } = props;
+  const { categoryTitle, posts } = pageContext;
+
+  const postsForCategory = posts.nodes.filter((post: any) =>
+    post.category.some((category: any) => category.name === categoryTitle)
+  );
+
+  return (
+    <Layout>
+      <BlogPosts posts={postsForCategory} />
+    </Layout>
+  );
+};
+
+export default SinglePost;
