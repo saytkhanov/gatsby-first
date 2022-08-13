@@ -2,6 +2,15 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import BlogPosts from "../components/BlogPosts";
+import { TypePost } from "../utils/types";
+
+interface Params {
+  data: {
+    posts: {
+      nodes: TypePost[];
+    };
+  };
+}
 
 const Home = ({ data }: Params): React.ReactElement => {
   return (
@@ -20,6 +29,7 @@ export const query = graphql`
         id
         title
         category {
+          id
           name
         }
         typeofpost {

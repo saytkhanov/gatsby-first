@@ -1,4 +1,5 @@
 import { GatsbyNode } from "gatsby";
+import { TypeCategory } from "./src/utils/types";
 const path = require("path");
 
 const postTemplate = path.resolve("./src/templates/single-post.tsx");
@@ -7,30 +8,12 @@ const categoryTemplate = path.resolve("./src/templates/category-page.tsx");
 type SingleResultData = {
   posts: {
     nodes: {
-      // coverImage: {
-      //   url: string;
-      // };
-      // body: string;
-      category: {
-        name: string;
-        id: string;
-      };
+      category: TypeCategory[];
       slug: string;
-      // title: string;
-      // typeofpost: {
-      //   name: string;
-      // };
-      // id: string;
-      // meta: {
-      //   createdAt: string;
-      // };
     }[];
   };
   categories: {
-    nodes: {
-      name: string;
-      id: string;
-    }[];
+    nodes: TypeCategory[];
   };
 };
 
@@ -60,24 +43,19 @@ export const createPages: GatsbyNode["createPages"] = async ({
     }
   `);
 
-  const { posts, categories }: any = result;
+  const { posts, categories }: any = result.data;
 
-  posts.nodes.forEach((post: any, index: number) => {
-    const previous =
-      index === posts.nodes.length - 1 ? null : posts.nodes[index + 1];
-    const next = index === 0 ? null : posts.nodes[index - 1];
+  posts.nodes.forEach((post: { slug: string }) => {
     createPage({
       path: `${post.slug}`,
       component: postTemplate,
       context: {
         slug: post.slug,
-        previous,
-        next,
       },
     });
   });
 
-  categories.nodes.forEach((category: any) => {
+  categories.nodes.forEach((category: { name: string }) => {
     createPage({
       path: `/categories/${category.name.toLowerCase()}`,
       component: categoryTemplate,
