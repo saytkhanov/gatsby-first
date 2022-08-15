@@ -12,7 +12,7 @@ const CategoryFilter = () => {
       posts: allDatoCmsPost {
         nodes {
           category {
-            id
+            originalId
             name
           }
         }
@@ -27,7 +27,7 @@ const CategoryFilter = () => {
       <ul className="flex">
         {categories.map((item: any) => {
           return (
-            <Link key={item.id} to={`/categories/${item.name.toLowerCase()}`}>
+            <Link key={item.originalId} to={`/categories/${item.name.toLowerCase()}`}>
               <li className="mr-4">{item.name}</li>
             </Link>
           );

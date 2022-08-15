@@ -13,9 +13,11 @@ interface Params {
 }
 
 const Home = ({ data }: Params): React.ReactElement => {
+
   return (
     <Layout>
-      <div>
+      <h1 className="text-2xl md:text-3xl md:text-4xl font-eina font-bold">Latest News</h1>
+      <div className="mt-4">
         <BlogPosts posts={data.posts.nodes} />
       </div>
     </Layout>
@@ -26,24 +28,29 @@ export const query = graphql`
   query MyQuery {
     posts: allDatoCmsPost {
       nodes {
-        id
-        title
+        body
         category {
-          id
           name
+          originalId
         }
+        featured
+        originalId
+        meta {
+          createdAt(formatString: "MMMM D, YYYY")
+        }
+        title
+        slug
         typeofpost {
           name
         }
-        slug
-        meta {
-          createdAt(formatString: "M MMM YYYY")
-        }
-        originalId
-        featured
-        body
         coverImage {
           url
+          gatsbyImageData(
+            width: 640
+            placeholder: BLURRED
+            forceBlurhash: false
+            imgixParams: {invert: false}
+          )
         }
       }
     }

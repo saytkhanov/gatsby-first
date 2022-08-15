@@ -1,5 +1,7 @@
+import { IGatsbyImageData } from "gatsby-plugin-image";
+
 export interface TypePost {
-  id: string;
+  originalId: string;
   title: string;
   category: {
     id: string;
@@ -15,7 +17,8 @@ export interface TypePost {
   body: string;
   featured: boolean;
   coverImage: {
-    url: string;
+    url: string
+    gatsbyImageData: IGatsbyImageData
   };
 }
 

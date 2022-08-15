@@ -24,22 +24,22 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const { createPage } = actions;
   const result = await graphql<SingleResultData>(`
     query PostQuery {
-      posts: allDatoCmsPost {
-        nodes {
-          title
-          slug
-          category {
-            id
-            name
-          }
-        }
+      posts:allDatoCmsPost {
+    nodes {
+      slug
+      title
+      category {
+        name
+        id
       }
-      categories: allDatoCmsCategory {
-        nodes {
-          id
-          name
-        }
-      }
+    }
+  }
+  categories:allDatoCmsCategory {
+    nodes {
+      id
+      name
+    }
+  }
     }
   `);
 

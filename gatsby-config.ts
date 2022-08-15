@@ -18,13 +18,10 @@ const config: GatsbyConfig = {
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
-    `gatsby-transformer-sharp`,
     {
       resolve: 'gatsby-source-datocms',
       options: {
         apiToken: process.env.DATO_API_TOKEN,
-        previewMode: false,
-        disableLiveReload: false,
       }
     }
   ],

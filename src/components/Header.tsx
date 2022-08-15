@@ -1,30 +1,23 @@
 import React from 'react';
-import { graphql, useStaticQuery, Link } from "gatsby";
-
-interface CategoryProps {
-    name: string
-    originalId: string
-}
+import CategoryFilter from "./CategoryFilter";
+import {Link} from "gatsby";
 
 const Header = () => {
-  const result = useStaticQuery(graphql`
-    query CategoryQuery {
-      allDatoCmsCategory {
-        nodes {
-          name
-          originalId
-        }
-      }
-    }
-  `);
-
   return (
-    <div>
-      {/*{result.allDatoCmsCategory.nodes.map((category: CategoryProps) => (*/}
-      {/*  <Link to={`/${category.name}`} key={category.originalId}>*/}
-      {/*    {category.name}*/}
-      {/*  </Link>*/}
-      {/*))}*/}
+    <div className="bg-white p-2.5 mb-6">
+        <div className="max-w-[980px] m-auto flex justify-between items-center">
+            <div>
+                <Link to='/' className="text-2xl font-semibold">
+                    Newsroom
+                </Link>
+            </div>
+            <CategoryFilter />
+            <div>
+                <button className="text-sm text-[#1d1d1f]">
+                    Popular Topics
+                </button>
+            </div>
+        </div>
     </div>
   );
 };
