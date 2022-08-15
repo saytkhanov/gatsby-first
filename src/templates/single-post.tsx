@@ -2,7 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import { ItemCardProps } from "../utils/types";
-import {GatsbyImage} from "gatsby-plugin-image";
+import { GatsbyImage } from "gatsby-plugin-image";
 
 interface SinglePostProps {
   data: ItemCardProps;
@@ -16,7 +16,7 @@ const SinglePost = ({ data }: SinglePostProps): React.ReactElement => {
       <h4>{post.typeofpost.name}</h4>
       <h1>{post.title}</h1>
       <h5>{post.meta.createdAt}</h5>
-        <GatsbyImage alt={post.title} image={post.coverImage.gatsbyImageData} />
+      <GatsbyImage alt={post.title} image={post.coverImage.gatsbyImageData} />
     </Layout>
   );
 };
@@ -24,30 +24,30 @@ const SinglePost = ({ data }: SinglePostProps): React.ReactElement => {
 export const query = graphql`
   query SinglePostQuery($slug: String) {
     post: datoCmsPost(slug: { eq: $slug }) {
-        body
+      body
+      originalId
+      featured
+      category {
         originalId
-        featured
-        category {
-            originalId
-            name
-        }
-        coverImage {
-            url
-            gatsbyImageData(
-                width: 640
-                placeholder: BLURRED
-                forceBlurhash: false
-                imgixParams: {invert: false}
-            )
-        }
-        typeofpost {
-            name
-        }
-        title
-        slug
-        meta {
-            createdAt(formatString: "DD MMM YYYY")
-        }
+        name
+      }
+      coverImage {
+        url
+        gatsbyImageData(
+          width: 640
+          placeholder: BLURRED
+          forceBlurhash: false
+          imgixParams: { invert: false }
+        )
+      }
+      typeofpost {
+        name
+      }
+      title
+      slug
+      meta {
+        createdAt(formatString: "DD MMM YYYY")
+      }
     }
   }
 `;

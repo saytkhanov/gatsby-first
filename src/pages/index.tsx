@@ -13,10 +13,11 @@ interface Params {
 }
 
 const Home = ({ data }: Params): React.ReactElement => {
-
   return (
     <Layout>
-      <h1 className="text-2xl md:text-3xl md:text-4xl font-eina font-bold">Latest News</h1>
+      <h1 className="text-2xl md:text-3xl md:text-4xl font-eina font-bold">
+        Latest News
+      </h1>
       <div className="mt-4">
         <BlogPosts posts={data.posts.nodes} />
       </div>
@@ -49,7 +50,7 @@ export const query = graphql`
             width: 640
             placeholder: BLURRED
             forceBlurhash: false
-            imgixParams: {invert: false}
+            imgixParams: { invert: false }
           )
         }
       }

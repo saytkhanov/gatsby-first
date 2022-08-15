@@ -1,33 +1,25 @@
 import React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
-import { TypePost } from "../utils/types";
-
-const getCategories = (posts: TypePost[]) => {
-  return posts.map((post) => post.category).flat();
-};
+import { TypeCategory } from "../utils/types";
 
 const CategoryFilter = () => {
-  const { posts } = useStaticQuery(graphql`
+  const { categories } = useStaticQuery(graphql`
     query {
-      posts: allDatoCmsPost {
+      categories: allDatoCmsCategory {
         nodes {
-          category {
-            originalId
-            name
-          }
+          id
+          name
         }
       }
     }
   `);
 
-  const categories = getCategories(posts.nodes);
-
   return (
     <div>
       <ul className="flex">
-        {categories.map((item: any) => {
+        {categories.nodes.map((item: TypeCategory) => {
           return (
-            <Link key={item.originalId} to={`/categories/${item.name.toLowerCase()}`}>
+            <Link key={item.id} to={`/categories/${item.name.toLowerCase()}`}>
               <li className="mr-4">{item.name}</li>
             </Link>
           );
