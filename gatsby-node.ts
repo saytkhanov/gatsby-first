@@ -9,7 +9,7 @@ type SingleResultData = {
   posts: {
     nodes: TypePost[]
   };
-  categories: TypeCategory
+  categories: TypeCategory[]
 };
 
 export const createPages: GatsbyNode["createPages"] = async ({
