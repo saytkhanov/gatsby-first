@@ -10,7 +10,7 @@ interface SinglePostProps {
 
 const SinglePost = ({ data }: SinglePostProps): React.ReactElement => {
   const { post } = data;
-
+  console.log(post)
   return (
     <Layout>
       <h4>{post.typeofpost.name}</h4>

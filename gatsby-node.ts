@@ -1,5 +1,5 @@
 import { GatsbyNode } from "gatsby";
-import { TypeCategory } from "./src/utils/types";
+import { TypeCategory, TypePost } from "./src/utils/types";
 const path = require("path");
 
 const postTemplate = path.resolve("./src/templates/single-post.tsx");
@@ -7,14 +7,9 @@ const categoryTemplate = path.resolve("./src/templates/category-page.tsx");
 
 type SingleResultData = {
   posts: {
-    nodes: {
-      category: TypeCategory[];
-      slug: string;
-    }[];
+    nodes: TypePost[]
   };
-  categories: {
-    nodes: TypeCategory[];
-  };
+  categories: TypeCategory
 };
 
 export const createPages: GatsbyNode["createPages"] = async ({
@@ -24,31 +19,31 @@ export const createPages: GatsbyNode["createPages"] = async ({
   const { createPage } = actions;
   const result = await graphql<SingleResultData>(`
     query PostQuery {
-      posts: allDatoCmsPost {
+      allDatoCmsPost {
         nodes {
-          body
           category {
+            id
             name
-            originalId
           }
-          featured
-          originalId
-          meta {
-            createdAt(formatString: "MMMM D, YYYY")
-          }
-          title
           slug
-          typeofpost {
-            name
-          }
+          body
           coverImage {
-            url
             gatsbyImageData(
               width: 640
               placeholder: BLURRED
               forceBlurhash: false
               imgixParams: { invert: false }
             )
+            url
+          }
+          featured
+          id
+          meta {
+            createdAt
+          }
+          title
+          typeofpost {
+            name
           }
         }
       }
@@ -74,12 +69,16 @@ export const createPages: GatsbyNode["createPages"] = async ({
   });
 
   categories.nodes.forEach((category: { name: string }) => {
+    const postsForCategory = posts.nodes.filter((post: TypePost) =>
+      post.category.some(
+        (categories: TypeCategory) => categories.name === category.name
+      )
+    );
     createPage({
       path: `/categories/${category.name.toLowerCase()}`,
       component: categoryTemplate,
       context: {
-        categoryTitle: category.name,
-        posts,
+        postsForCategory,
       },
     });
   });

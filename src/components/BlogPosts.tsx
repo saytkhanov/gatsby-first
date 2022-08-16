@@ -9,7 +9,7 @@ interface BlogPostsProps {
 const BlogPosts = ({ posts }: BlogPostsProps) => {
 
   return (
-    <div className="grid grid-cols-1 gap-y-6 md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-9">
+    <div className="grid-columns">
       {posts.map((post) => {
         return <ItemCard key={post.originalId} post={post} />;
       })}

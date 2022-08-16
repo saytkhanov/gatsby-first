@@ -1,5 +1,4 @@
 import React from 'react';
-import CategoryFilter from "./CategoryFilter";
 import {Link} from "gatsby";
 
 const Header = () => {
@@ -11,7 +10,6 @@ const Header = () => {
                     Newsroom
                 </Link>
             </div>
-            <CategoryFilter />
             <div>
                 <button className="text-sm text-[#1d1d1f]">
                     Popular Topics

@@ -8,7 +8,38 @@ body {
 
 .grid-columns {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 36px;
     row-gap: 32px;
+    grid-template-columns: minmax(200px, 1fr);
+    grid-template-areas: 'myArea';
+    grid-area: myArea;
+}
+
+@media (min-width: 640px) {
+    .grid-columns {
+        display: grid;
+        grid-template-columns: minmax(200px, 1fr);
+        grid-template-areas: 'myArea';
+        grid-area: myArea;
+    }
+}
+
+@media (min-width: 768px) {
+    .grid-columns {
+        display: grid;
+        grid-area: myArea;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 'myArea myArea';
+    }
+}
+
+@media (min-width: 1024px) {
+     :first-child {
+        grid-area: big;
+    }
+    .grid-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: 'big big big';
+    }
 }
