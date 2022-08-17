@@ -1,7 +1,7 @@
 import { IGatsbyImageData } from "gatsby-plugin-image";
 
 export interface TypePost {
-  originalId: string;
+  id: string;
   title: string;
   category: {
     id: string;
@@ -29,4 +29,11 @@ export interface TypeCategory {
 
 export interface ItemCardProps {
   post: TypePost;
+}
+
+export interface PaginationProps {
+  limit: number;
+  skip: number;
+  numPages: number;
+  currentPage: number;
 }

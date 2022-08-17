@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useState } from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { Carousel } from "flowbite-react";
@@ -44,6 +44,8 @@ const Slider = (): React.ReactElement => {
   //     setSlideIndex(carousel.nodes.length);
   //   }
   // };
+
+  console.log(carousel);
 
   return (
     <div className="md:h-[340px] lg:h-[551px] md:w-[692px] lg:w-[980px] mx-auto">

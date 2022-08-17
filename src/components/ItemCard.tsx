@@ -8,7 +8,7 @@ const ItemCard = ({ post }: ItemCardProps) => {
   return (
     <Link
       to={`/${post.slug}`}
-      className="flex flex-col first:lg:flex-row overflow-hidden w-full rounded-2xl"
+      className="flex flex-col overflow-hidden w-full rounded-2xl"
     >
       <div className="w-full">
         <GatsbyImage
@@ -21,7 +21,7 @@ const ItemCard = ({ post }: ItemCardProps) => {
         <p className="mb-2 text-sm text-gray-500 uppercase tracking-wide font-bold">
           {post.typeofpost.name}
         </p>
-        <h1 className="font-bold text-lg">{post.title}</h1>
+          <h1 className="font-bold text-lg">{post.title}</h1>
         <p className="text-sm text-gray-500 uppercase tracking-wide font-bold mt-2">
           {post.meta.createdAt}
         </p>
