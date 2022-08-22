@@ -45,8 +45,6 @@ const Slider = (): React.ReactElement => {
   //   }
   // };
 
-  console.log(carousel);
-
   return (
     <div className="md:h-[340px] lg:h-[551px] md:w-[692px] lg:w-[980px] mx-auto">
       <h1 className="text-2xl md:text-3xl md:text-4xl font-eina font-bold text-white pt-20 pb-8">

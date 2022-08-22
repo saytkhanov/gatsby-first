@@ -1,13 +1,16 @@
-import {Actions, GatsbyNode} from "gatsby";
-import {ItemCardProps, TypeCategory, TypePost} from "./src/utils/types";
+import { Actions, GatsbyNode } from "gatsby";
+import { ItemCardProps, TypeCategory, TypePost } from "./src/utils/types";
 const path = require("path");
 
 const postTemplate = path.resolve("./src/templates/single-post.tsx");
 const categoryTemplate = path.resolve("./src/templates/category-page.tsx");
-const frontTemplate = path.resolve('./src/templates/front-page.tsx');
+const frontTemplate = path.resolve("./src/templates/front-page.tsx");
 
 // Posts pagination
-const createPostsPagination = (createPage: Actions['createPage'], posts: { nodes: TypePost[]}) => {
+const createPostsPagination = (
+  createPage: Actions["createPage"],
+  posts: { nodes: TypePost[] }
+) => {
   const { nodes } = posts;
 
   // Create blog post list pages
@@ -30,51 +33,28 @@ const createPostsPagination = (createPage: Actions['createPage'], posts: { nodes
 
 type SingleResultData = {
   posts: {
-    nodes: TypePost[]
+    nodes: TypePost[];
   };
-  categories: TypeCategory[]
+  categories: TypeCategory[];
 };
 
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,
 }) => {
-
-
   const { createPage } = actions;
   const result = await graphql<SingleResultData>(`
     query PostQuery {
       posts: allDatoCmsPost {
         nodes {
           category {
-            id
             name
           }
           slug
-          body
-          coverImage {
-            gatsbyImageData(
-              width: 640
-              placeholder: BLURRED
-              forceBlurhash: false
-              imgixParams: { invert: false }
-            )
-            url
-          }
-          featured
-          id
-          meta {
-            createdAt(formatString: "MMMM D, YYYY")
-          }
-          title
-          typeofpost {
-            name
-          }
         }
       }
       categories: allDatoCmsCategory {
         nodes {
-          id
           name
         }
       }
@@ -89,24 +69,19 @@ export const createPages: GatsbyNode["createPages"] = async ({
       component: postTemplate,
       context: {
         slug: post.slug,
-        post
       },
     });
   });
 
-  createPostsPagination(createPage, posts)
+  createPostsPagination(createPage, posts);
 
   categories.nodes.forEach((category: { name: string }) => {
-    const postsForCategory = posts.nodes.filter((post: TypePost) =>
-      post.category.some(
-        (categories: TypeCategory) => categories.name === category.name
-      )
-    );
     createPage({
       path: `/categories/${category.name.toLowerCase()}`,
       component: categoryTemplate,
       context: {
-        postsForCategory,
+        categoryTitle: category.name,
+        posts,
       },
     });
   });

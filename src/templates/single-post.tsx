@@ -2,16 +2,17 @@ import React from "react";
 import Layout from "../components/Layout";
 import { TypePost } from "../utils/types";
 import { GatsbyImage } from "gatsby-plugin-image";
+import { graphql } from "gatsby";
 
 interface SinglePostProps {
-  pageContext: {
-      post: TypePost,
-      slug: string
+  data: {
+    post: TypePost;
   };
 }
 
-const SinglePost = ({ pageContext }: SinglePostProps): React.ReactElement => {
-  const { post } = pageContext;
+const SinglePost = (props: SinglePostProps): React.ReactElement => {
+  const { data } = props;
+  const { post } = data;
 
   return (
     <Layout>
@@ -22,5 +23,34 @@ const SinglePost = ({ pageContext }: SinglePostProps): React.ReactElement => {
     </Layout>
   );
 };
+
+export const query = graphql`
+  query ($slug: String) {
+    post: datoCmsPost(slug: { eq: $slug }) {
+      body
+      category {
+        name
+      }
+      featured
+      id
+      meta {
+        createdAt
+      }
+      slug
+      title
+      typeofpost {
+        name
+      }
+      coverImage {
+        gatsbyImageData(
+          width: 640
+          placeholder: BLURRED
+          forceBlurhash: false
+          imgixParams: { invert: false }
+        )
+      }
+    }
+  }
+`;
 
 export default SinglePost;

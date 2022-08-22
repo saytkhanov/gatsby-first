@@ -6,6 +6,7 @@ import {PaginationProps, TypePost} from "../utils/types";
 import Carousel from "../components/Carousel";
 import CategoryFilter from "../components/CategoryFilter";
 import Pagination from "../components/Pagination";
+import FooterCards from "../components/FooterCards";
 
 interface Params {
     data: {
@@ -32,6 +33,9 @@ const FrontPage = ({ data, pageContext}: Params): React.ReactElement => {
             </Layout>
             <div className='bg-black mt-16 h-[500px] md:h-[640px] lg:h-[846px]'>
                 <Carousel />
+            </div>
+            <div>
+                <FooterCards />
             </div>
         </>
     );
